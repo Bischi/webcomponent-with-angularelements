@@ -8,7 +8,6 @@ Eine ausführlichere Beschreibung -> [AngularElements](https://angular.io/guide/
 
 Installation: `npm i @angular/elements --save`
 
-
 ## AutoComplete Component
 Die Auto-Complete-Component ist die Angular Componente, die zu einer Web Componente wird. Dafür muss in `app.module.ts` folgendes definiert werden: 
 
@@ -29,5 +28,9 @@ Die Auto-Complete-Component ist die Angular Componente, die zu einer Web Compone
  `const element = createCustomElement(AutoCompleteComponent, { injector: this.injector });` bewirkt die Umwandlung von einer Angular Component in eine Web Component. Sie kann dann wie eine gewöhnliche Web Component im Browser registriert werden: `customElements.define('auto-complete', element);`.
 
 Wichtig ist, dass keine Komponente als Bootstrap (also für das Hochfahren der App) angegeben wird! 
+
+## Build
+Beim Builden der Angular App werden meist mehrere Bundles erstellt (für main, polyfills, css,...). Das macht den Austausch der Component schwer und daher habe ich den Build-Prozess angepasst. Mit `npm run build:elements` wird die Angular Component als ein JS-File in *element/autocomplete.js* erstellt. Durch das Einbinden dieses JF-Files in andere Anwendungen, kann die Web Component dort verwendet werden.
+
 
 
