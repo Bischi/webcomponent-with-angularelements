@@ -1,27 +1,33 @@
 # AutoCompleteWebComponent
+Martin Bischof
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.0.
+## Angular Elements
+Angular Elements bietet die Möglichkeit aus einer Angular-Component eine Web Component zu erstellen, die auch außerhalb der Angular-Umgebung verwendet werden kann. Der große Vorteil dabei ist, dass die Component wie eine ganz gewöhnliche Angular-Component entwickelt werden kann.
 
-## Development server
+Eine ausführlichere Beschreibung -> [AngularElements](https://angular.io/guide/elements)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Installation: `npm i @angular/elements --save`
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## AutoComplete Component
+Die Auto-Complete-Component ist die Angular Componente, die zu einer Web Componente wird. Dafür muss in `app.module.ts` folgendes definiert werden: 
 
-## Build
+    @NgModule({
+      ...
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      entryComponents: [AutoCompleteComponent]
+    })
+    export class AppModule {
+      constructor(private injector: Injector) { }
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+      ngDoBootstrap() {
+        const element = createCustomElement(AutoCompleteComponent, { injector: this.injector });
+        customElements.define('auto-complete', element);
+      }
+    }
 
-## Running unit tests
+ `const element = createCustomElement(AutoCompleteComponent, { injector: this.injector });` bewirkt die Umwandlung von einer Angular Component in eine Web Component. Sie kann dann wie eine gewöhnliche Web Component im Browser registriert werden: `customElements.define('auto-complete', element);`.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Wichtig ist, dass keine Komponente als Bootstrap (also für das Hochfahren der App) angegeben wird! 
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
